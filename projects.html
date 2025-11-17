@@ -416,6 +416,40 @@
         text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
     }
 
+    /* Tombol Preview Code */
+    .preview-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #25283B, #1a1c2b);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+    }
+
+    .preview-btn:hover {
+        background: linear-gradient(135deg, #1a1c2b, #25283B);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .preview-btn i {
+        font-size: 1rem;
+    }
+
     .img-box:hover {
         width: 300px;
         cursor: pointer;
@@ -424,6 +458,11 @@
     .img-box:hover h3{
         opacity: 1;
         bottom: 24px;
+    }
+
+    .img-box:hover .preview-btn {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     @media screen and (max-width: 1023px) {
@@ -458,6 +497,11 @@
             width: 100%;
             text-align: center;
             padding: 0 30px;
+        }
+
+        .preview-btn {
+            padding: 8px 16px;
+            font-size: 0.8rem;
         }
     }
     @media screen and (max-width: 767px) {
@@ -521,6 +565,13 @@
 
         .gallery-title {
             font-size: 2em;
+        }
+
+        .preview-btn {
+            padding: 6px 12px;
+            font-size: 0.7rem;
+            top: 10px;
+            right: 10px;
         }
     }
 
@@ -586,6 +637,8 @@
         color: #ff5252;
     }
     </style>
+    <!-- Font Awesome untuk icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
@@ -622,20 +675,33 @@
         <div class="gallery-container">
             <h2 class="gallery-title">MY PROJECTS</h2>
             <div class="gallery">
-                <div class="img-box" onclick="openModal('https://github.com/Galvinal-227/galcalbu')">
-                    <h3>Web Design</h3>
+                <div class="img-box">
+                    <a href="https://github.com/Galvinal-227/galcalbu" class="preview-btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        Preview Code
+                    </a>
+                    <h3>Galcalbu Project</h3>
                 </div>
-                <div class="img-box" onclick="openModal('https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
-                    <h3>UI/UX</h3>
+                <div class="img-box">
+                    <a href="https://github.com/your-username/project2" class="preview-btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        Preview Code
+                    </a>
+                    <h3>UI/UX Design</h3>
                 </div>
-                <div class="img-box" onclick="openModal('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
-                    <h3>Development</h3>
+                <div class="img-box">
+                    <a href="https://github.com/your-username/project3" class="preview-btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        Preview Code
+                    </a>
+                    <h3>Web Development</h3>
                 </div>
-                <div class="img-box" onclick="openModal('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                <div class="img-box">
+                    <a href="https://github.com/your-username/project4" class="preview-btn" target="_blank">
+                        <i class="fab fa-github"></i>
+                        Preview Code
+                    </a>
                     <h3>Branding</h3>
-                </div>
-                <div class="img-box" onclick="openModal('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
-                    <h3>Marketing</h3>
                 </div>
             </div>
         </div>
@@ -671,6 +737,28 @@
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 closeModal();
+            }
+        });
+
+        // Tambahkan event listener untuk gambar yang masih bisa diklik untuk modal
+        document.querySelectorAll('.img-box').forEach((box, index) => {
+            // Hanya tambahkan event listener untuk gambar yang ingin menampilkan modal
+            if (index === 0) { // Gambar pertama (galcalbu)
+                box.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('preview-btn')) {
+                        openModal('assets/galcalbu.png');
+                    }
+                });
+            } else {
+                // Untuk gambar lainnya, tetap bisa diklik untuk modal
+                const bgImage = window.getComputedStyle(box).backgroundImage;
+                const imageUrl = bgImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+                
+                box.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('preview-btn')) {
+                        openModal(imageUrl);
+                    }
+                });
             }
         });
     </script>
