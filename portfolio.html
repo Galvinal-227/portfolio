@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAD Portfolio</title>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+  <style>
+    /* CSS untuk latar belakang sesuai permintaan */
+    body {
+      background-color: #D2D2D2;
+      background-image:
+          repeating-linear-gradient(
+              to right, transparent 0 100px,
+              #25283b22 100px 101px
+          ),
+          repeating-linear-gradient(
+              to bottom, transparent 0 100px,
+              #25283b22 100px 101px
+          );
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-top: 70px; /* Padding untuk navbar fixed */
+      margin: 0;
+      min-height: 100vh;
+      position: relative;
+      color: #333;
+    }
+    
+    body::before {
+      position: absolute;
+      width: min(1400px, 90vw);
+      top: 10%;
+      left: 50%;
+      height: 90%;
+      transform: translateX(-50%);
+      content: '';
+      background-image: url(assets/bg.png);
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: top center;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* CSS tambahan untuk layout yang lebih baik */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(210, 210, 210, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid rgba(120, 120, 120, 0.2);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .profile-page {
+      padding: 40px 0;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .profile-info h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #444;
+      font-weight: 600;
+    }
+
+    .profile-info .title {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .profile-info .location {
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-btn {
+      padding: 8px 16px;
+      background-color: rgba(120, 120, 120, 0.7);
+      color: #f5f5f5;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-weight: 500;
+      border: 1px solid rgba(100, 100, 100, 0.3);
+    }
+
+    .social-btn:hover {
+      background-color: rgba(100, 100, 100, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #444;
+      border-bottom: 2px solid rgba(100, 100, 100, 0.3);
+      padding-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .section p {
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .skill-item {
+      padding: 12px 15px;
+      background-color: rgba(220, 220, 220, 0.7);
+      border-radius: 6px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(180, 180, 180, 0.4);
+      transition: all 0.3s;
+      color: #444;
+      font-weight: 500;
+    }
+
+    .skill-item:hover {
+      background-color: rgba(200, 200, 200, 0.8);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .experience-item {
+      margin-bottom: 25px;
+      padding: 20px;
+      background-color: rgba(230, 230, 230, 0.7);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(180, 180, 180, 0.3);
+      transition: all 0.3s;
+    }
+
+    .experience-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .experience-item h3 {
+      margin: 0 0 10px 0;
+      color: #444;
+      font-weight: 600;
+    }
+
+    .experience-item .date {
+      color: #666;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    /* CSS untuk header dan navigasi */
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #444;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      color: #333;
+      background-color: rgba(180, 180, 180, 0.3);
+    }
+
+    nav a.active {
+      color: #333;
+      background-color: rgba(180, 180, 180, 0.4);
+    }
+
+    .language-switcher {
+      position: relative;
+    }
+
+    .language-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(200, 200, 200, 0.5);
+      border: 1px solid rgba(150, 150, 150, 0.3);
+      border-radius: 4px;
+      cursor: pointer;
+      color: #555;
+      font-weight: 500;
+      padding: 6px 12px;
+      transition: all 0.3s;
+    }
+
+    .language-btn:hover {
+      background: rgba(180, 180, 180, 0.7);
+    }
+
+    .language-options {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: rgba(220, 220, 220, 0.95);
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: none;
+      flex-direction: column;
+      min-width: 150px;
+      overflow: hidden;
+      border: 1px solid rgba(150, 150, 150, 0.3);
+      backdrop-filter: blur(5px);
+    }
+
+    .language-switcher.active .language-options {
+      display: flex;
+    }
+
+    .language-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background-color 0.3s;
+      color: #555;
+    }
+
+    .language-option:hover {
+      background-color: rgba(180, 180, 180, 0.5);
+    }
+
+    .language-option.active {
+      background-color: rgba(170, 170, 170, 0.6);
+    }
+
+    .flag-icon {
+      width: 20px;
+      height: 15px;
+    }
+
+    /* Hapus elemen video background yang tidak diperlukan */
+    .video-background {
+      display: none;
+    }
+    
+    /* Animasi tambahan untuk elemen */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .profile-info, .section {
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    /* Responsif */
+    @media (max-width: 768px) {
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
+      
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+      }
+      
+      .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+    <header>
+      <div class="container">
+        <h1 data-aos="fade-down" data-aos-duration="1500" class="logo">GAD</h1>
+        <nav>
+          <a data-aos="fade-down" href="index.html" class="active">Home</a>
+          <a data-aos="fade-down" href="projects.html">Projects</a>
+          <!-- Tambahkan tombol bahasa di sini -->
+          <div data-aos="fade-down" class="language-switcher" id="languageSwitcher">
+            <button class="language-btn" id="languageBtn" type="button">
+              <span id="currentLanguage">EN</span>
+              <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="language-options" id="languageOptions">
+              <button class="language-option active" data-lang="en" type="button">
+                <span>English</span>
+              </button>
+              <button class="language-option" data-lang="id" type="button">
+                <span>Indonesia</span>
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hapus video background karena kita menggunakan latar belakang baru -->
+    
+    <section class="profile-page">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <h1 data-i18n="profileName">Galvin Alfito Dinova</h1>
+                    <p class="title" data-i18n="profileTitle">Web Developer</p>
+                    <p class="location" data-i18n="profileLocation">📍 Kwagean, Loceret, Nganjuk</p>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-btn">GitHub</a>
+                        <a href="#" class="social-btn">LinkedIn</a>
+                        <a href="#" class="social-btn">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-content">
+                <div class="about-section section">
+                    <h2 data-i18n="aboutTitle">About Me</h2>
+                    <p data-i18n="aboutDesc">Passionate web developer dengan pengalaman 2+ tahun dalam mengembangkan website modern dan interaktif. Spesialis dalam front-end development dengan fokus pada user experience yang optimal.</p>
+                </div>
+                
+                <div class="skills-section section">
+                    <h2 data-i18n="skillsTitle">Skills</h2>
+                    <div class="skills-grid">
+                        <div class="skill-item">HTML/CSS</div>
+                        <div class="skill-item">JavaScript</div>
+                        <div class="skill-item">UI/UX Design</div>
+                        <div class="skill-item">Responsive Design</div>
+                        <div class="skill-item">React</div>
+                        <div class="skill-item">Vue.js</div>
+                    </div>
+                </div>
+                
+                <div class="experience-section section">
+                    <h2 data-i18n="experienceTitle">Experience</h2>
+                    <div class="experience-item">
+                        <h3 data-i18n="experience1Title">Frontend Developer - WEB 3D</h3>
+                        <p class="date" data-i18n="experience1Date">2025 - Present</p>
+                        <p data-i18n="experience1Desc">Mengembangkan website dengan teknologi modern.</p>
+                    </div>
+                    <div class="experience-item">
+                        <h3 data-i18n="experience2Title">Pengembangan Aplikasi calculator business</h3>
+                        <p class="date" data-i18n="experience2Date">2025</p>
+                        <p data-i18n="experience2Desc">Membantu pengembangan aplikasi kalkulator bisnis, untuk pebisnis menghitung untung rugi dan modal yang harus di keluarkan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+    // Inisialisasi AOS
+    AOS.init();
+
+    // Data terjemahan untuk halaman profile
+    const translations = {
+      en: {
+        // Profile Page
+        profileName: "Galvin Alfito Dinova",
+        profileTitle: "Web Developer",
+        profileLocation: "📍 Kwagean, Loceret, Nganjuk",
+        
+        // About Section
+        aboutTitle: "About Me",
+        aboutDesc: "Passionate web developer with 2+ years of experience in developing modern and interactive websites. Specialist in front-end development with focus on optimal user experience.",
+        
+        // Skills Section
+        skillsTitle: "Skills",
+        
+        // Experience Section
+        experienceTitle: "Experience",
+        experience1Title: "Frontend Developer - WEB 3D",
+        experience1Date: "2025 - Present",
+        experience1Desc: "Developing websites with modern technology.",
+        experience2Title: "Calculator Business Application Development",
+        experience2Date: "2025",
+        experience2Desc: "Helped develop a business calculator application for entrepreneurs to calculate profit, loss, and required capital."
+      },
+      id: {
+        // Profile Page
+        profileName: "Galvin Alfito Dinova",
+        profileTitle: "Web Developer",
+        profileLocation: "📍 Kwagean, Loceret, Nganjuk",
+        
+        // About Section
+        aboutTitle: "Tentang Saya",
+        aboutDesc: "Web developer yang bersemangat dengan pengalaman 2+ tahun dalam mengembangkan website modern dan interaktif. Spesialis dalam front-end development dengan fokus pada user experience yang optimal.",
+        
+        // Skills Section
+        skillsTitle: "Keahlian",
+        
+        // Experience Section
+        experienceTitle: "Pengalaman",
+        experience1Title: "Frontend Developer - WEB 3D",
+        experience1Date: "2025 - Sekarang",
+        experience1Desc: "Mengembangkan website dengan teknologi modern.",
+        experience2Title: "Pengembangan Aplikasi Kalkulator Bisnis",
+        experience2Date: "2025",
+        experience2Desc: "Membantu pengembangan aplikasi kalkulator bisnis, untuk pebisnis menghitung untung rugi dan modal yang harus dikeluarkan."
+      }
+    };
+
+    // Fungsi untuk mengubah bahasa
+    function changeLanguage(lang) {
+      console.log('Changing language to:', lang);
+      
+      // Simpan preferensi bahasa
+      localStorage.setItem('preferredLanguage', lang);
+      
+      // Update semua elemen dengan data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+            element.value = translations[lang][key];
+          } else {
+            element.textContent = translations[lang][key];
+          }
+        }
+      });
+      
+      // Update tombol bahasa
+      document.getElementById('currentLanguage').textContent = lang.toUpperCase();
+      
+      // Update kelas aktif pada opsi bahasa
+      document.querySelectorAll('.language-option').forEach(option => {
+        if (option.getAttribute('data-lang') === lang) {
+          option.classList.add('active');
+        } else {
+          option.classList.remove('active');
+        }
+      });
+    }
+
+    // Event listener untuk tombol bahasa
+    document.getElementById('languageBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Language button clicked');
+      const switcher = document.getElementById('languageSwitcher');
+      switcher.classList.toggle('active');
+    });
+
+    // Event listener untuk opsi bahasa
+    document.querySelectorAll('.language-option').forEach(option => {
+      option.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const lang = this.getAttribute('data-lang');
+        console.log('Language option clicked:', lang);
+        changeLanguage(lang);
+        document.getElementById('languageSwitcher').classList.remove('active');
+      });
+    });
+
+    // Tutup dropdown bahasa saat klik di luar
+    document.addEventListener('click', function(event) {
+      const languageSwitcher = document.getElementById('languageSwitcher');
+      if (!languageSwitcher.contains(event.target)) {
+        languageSwitcher.classList.remove('active');
+      }
+    });
+
+    // Muat bahasa yang dipilih sebelumnya atau default
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
+      console.log('DOM loaded, setting language to:', savedLanguage);
+      changeLanguage(savedLanguage);
+    });
+  </script>
+</body>
+</html>

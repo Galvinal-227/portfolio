@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - GAD</title>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    /* CSS untuk latar belakang sesuai permintaan */
+    body {
+      background-color: #D2D2D2;
+      background-image:
+          repeating-linear-gradient(
+              to right, transparent 0 100px,
+              #25283b22 100px 101px
+          ),
+          repeating-linear-gradient(
+              to bottom, transparent 0 100px,
+              #25283b22 100px 101px
+          );
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      position: relative;
+      color: #333;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      position: absolute;
+      width: min(1400px, 90vw);
+      top: 10%;
+      left: 50%;
+      height: 90%;
+      transform: translateX(-50%);
+      content: '';
+      background-image: url(assets/bg.png);
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: top center;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Header styling */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(210, 210, 210, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid rgba(120, 120, 120, 0.2);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #444;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      color: #333;
+      background-color: rgba(180, 180, 180, 0.3);
+    }
+
+    nav a.active {
+      color: #333;
+      background-color: rgba(180, 180, 180, 0.4);
+    }
+
+    /* Main content styling */
+    main {
+      padding-top: 120px;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-section {
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .page-section h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #444;
+      font-weight: 600;
+    }
+
+    .page-section p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      color: #555;
+    }
+
+    /* Contact form styling */
+    .contact-form {
+      background-color: rgba(230, 230, 230, 0.7);
+      border-radius: 12px;
+      padding: 30px;
+      border: 1px solid rgba(180, 180, 180, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .contact-form:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(150, 150, 150, 0.4);
+      border-radius: 6px;
+      background-color: rgba(240, 240, 240, 0.8);
+      color: #333;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: rgba(100, 100, 100, 0.6);
+      background-color: rgba(245, 245, 245, 0.9);
+      box-shadow: 0 0 0 2px rgba(120, 120, 120, 0.2);
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: #777;
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .btn-signing-main {
+      width: 100%;
+      padding: 12px 30px;
+      background-color: rgba(120, 120, 120, 0.7);
+      color: #f5f5f5;
+      border: 1px solid rgba(100, 100, 100, 0.3);
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .btn-signing-main:hover {
+      background-color: rgba(100, 100, 100, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-signing-main:active {
+      transform: translateY(0);
+    }
+
+    /* Success message styling */
+    .success-message {
+      background-color: rgba(200, 230, 200, 0.8);
+      border: 1px solid rgba(150, 200, 150, 0.5);
+      color: #2d5a2d;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .error-message {
+      background-color: rgba(230, 200, 200, 0.8);
+      border: 1px solid rgba(200, 150, 150, 0.5);
+      color: #5a2d2d;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    /* Hapus elemen yang tidak diperlukan */
+    .video-background {
+      display: none;
+    }
+
+    /* Animasi tambahan */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .page-section > * {
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    /* Responsif */
+    @media (max-width: 768px) {
+      main {
+        padding-top: 100px;
+      }
+      
+      .page-section {
+        padding: 20px;
+      }
+      
+      .page-section h1 {
+        font-size: 2rem;
+      }
+      
+      .page-section p {
+        font-size: 1rem;
+      }
+      
+      .contact-form {
+        padding: 20px;
+      }
+      
+      nav {
+        gap: 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .page-section h1 {
+        font-size: 1.8rem;
+      }
+      
+      .contact-form input,
+      .contact-form textarea {
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1 data-aos="fade-down" data-aos-duration="1500" class="logo">GAD</h1>
+      <nav>
+        <a data-aos="fade-down" href="index.html">Home</a>
+        <a data-aos="fade-down" href="projects.html">Projects</a>
+        <a data-aos="fade-down" href="contact.html" class="active">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-section">
+      <h1 data-aos="fade-up">Hubungi Saya</h1>
+      <p data-aos="fade-up" data-aos-delay="200">
+        Tertarik untuk berkolaborasi? Silakan hubungi saya lewat form di bawah ini:
+      </p>
+
+      <!-- Success and Error Messages -->
+      <div id="success-message" class="success-message">
+        Pesan berhasil dikirim! Terima kasih telah menghubungi GAD.
+      </div>
+      <div id="error-message" class="error-message">
+        Gagal mengirim pesan. Silakan coba lagi nanti.
+      </div>
+
+      <form id="contact-form" class="contact-form" data-aos="fade-up" data-aos-delay="400">
+        <input type="text" name="from_name" placeholder="Nama Anda" required>
+        <input type="email" name="reply_to" placeholder="Email Anda" required>
+        <textarea name="message" placeholder="Pesan Anda..." rows="5" required></textarea>
+        <button type="submit" class="btn-signing-main">Kirim Pesan</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Inisialisasi EmailJS
+    (function() {
+      emailjs.init("HOWiXGN-zDmo063ZS"); // 🔹 Ganti dengan Public Key kamu
+    })();
+
+    // Event listener untuk form
+    document.getElementById("contact-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // Sembunyikan pesan sebelumnya
+      document.getElementById('success-message').style.display = 'none';
+      document.getElementById('error-message').style.display = 'none';
+
+      emailjs.send("service_njv03cr","template_jk6dacb", this)
+        .then(function() {
+          // Tampilkan pesan sukses
+          document.getElementById('success-message').style.display = 'block';
+          document.getElementById("contact-form").reset();
+          
+          // Scroll ke atas untuk melihat pesan sukses
+          window.scrollTo({
+            top: document.querySelector('.page-section').offsetTop - 100,
+            behavior: 'smooth'
+          });
+        }, function(error) {
+          // Tampilkan pesan error
+          document.getElementById('error-message').style.display = 'block';
+          console.error("EmailJS Error:", error);
+          
+          // Scroll ke atas untuk melihat pesan error
+          window.scrollTo({
+            top: document.querySelector('.page-section').offsetTop - 100,
+            behavior: 'smooth'
+          });
+        });
+    });
+  </script>
+</body>
+</html>

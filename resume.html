@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAD RESUME</title>
+  <link rel="stylesheet" href="style/styleresume.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+</head>
+<body>
+  <div class="container" id="resumeContainer">
+    <header>
+      <h1 class="name">Galvin Alfito Dinova</h1>
+      <div class="title">Web Developer</div>
+      <div class="contact-info">
+        <div class="contact-item">
+          <i>✉️</i> galvinalfito@gmail.com
+        </div>
+        <div class="contact-item">
+          <i>📱</i> +62 856-4752-7381
+        </div>
+        <div class="contact-item">
+          <i>📍</i> Kwagean, Loceret, Nganjuk
+        </div>
+        <div class="contact-item">
+          <i>🔗</i> linkedin.com/in/galvinalfito
+        </div>
+      </div>
+    </header>
+
+    <section class="summary-section">
+      <h2>Professional Summary</h2>
+      <p class="summary">
+        Web Developer dengan semangat tinggi dalam menciptakan aplikasi web modern dan efisien. Terampil dalam mengembangkan front-end interaktif serta backend yang kuat, dengan fokus pada performa dan pengalaman pengguna. Suka belajar hal baru dan berkolaborasi dalam tim kreatif.
+      </p>
+    </section>
+
+    <section class="experience-section">
+      <h2>Work Experience</h2>
+      <div class="experience-item">
+        <div class="job-title">Web Developer</div>
+        <div class="company">WEB DEVELOPER</div>
+        <div class="date">2023 - Sekarang</div>
+        <ul>
+          <li>Mengembangkan website kesehatan sudah teruji oleh beberapa orang</li>
+          <li>Mengembangkan website edukasi tentang dinosaurus untuk pembelajaran sehari hari</li>
+          <li>Mengembangkan aplikasi menggunakan python yaitu aplikasi calculator business</li>
+          <li>Berkolaborasi dalam pengembangan fitur baru dan perbaikan bug</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="education-section">
+      <h2>Education</h2>
+      <div class="education-item">
+        <div class="job-title">Pengembangan Perangkat Lunak dan Gim (PPLG)</div>
+        <div class="company">SMKN 2 Nganjuk</div>
+        <div class="date">2024 - Sekarang</div>
+      </div>
+    </section>
+
+    <section class="skills-section">
+      <h2>Technical Skills</h2>
+      <div class="skills-container">
+        <div class="skill-category">
+          <h3>Front-end</h3>
+          <div class="skill-list">
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3>Back-end</h3>
+          <div class="skill-list">
+            <span class="skill-tag">PHP</span>
+            <span class="skill-tag">LARAVEL</span>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">PYTHON</span>
+            <span class="skill-tag">C#</span>
+          </div>
+        </div>
+
+        <div class="skill-category">
+          <h3>Tools & Others</h3>
+          <div class="skill-list">
+            <span class="skill-tag">Github</span>
+            <span class="skill-tag">Laragon</span>
+            <span class="skill-tag">VS Code</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects-section">
+      <h2>Notable Projects</h2>
+      <div class="projects-container">
+        <div class="project-item">
+          <div class="project-title">HEALTY</div>
+          <div class="project-description">
+            Website Kesehatan Yang bisa Mengukur Jarak Langkah Kaki Dan Cuaca Dan juga website ini Bisa mengingatkan Kita waktu makan agar pola makan kita terjaga.
+          </div>
+        </div>
+
+        <div class="project-item">
+          <div class="project-title">Website Dinosaurus</div>
+          <div class="project-description">
+            Website yang mempelajari tentang kehidupan zaman Dinosaurus. Dan menjelaskan tentang fosil-fosil yang sangat di anggap langka sekarang ini, dan untuk edukasi belajar tentang zaman purba.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Tombol di luar container biar gak ke-capture -->
+  <div class="action-buttons">
+    <button class="btn btn-primary" id="downloadBtn">Download PDF</button>
+    <a href="index.html" class="btn btn-secondary">Back to Portfolio</a>
+    <a href="contact.html" class="btn btn-secondary">Colaboration? click me</a>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  document.getElementById("downloadBtn").addEventListener("click", function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4');
+    
+    // Capture hanya container CV, tombol sudah di luar
+    html2canvas(document.getElementById("resumeContainer")).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 295; // A4 height in mm
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      let heightLeft = imgHeight;
+      
+      let position = 0;
+      
+      // Add first page
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+      
+      // Add more pages if needed
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      
+      doc.save('Galvin_Alfito_CV.pdf');
+    });
+  });
+</script>
+</body>
+</html>

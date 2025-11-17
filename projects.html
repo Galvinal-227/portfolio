@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio - Project Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+      background-color: #D2D2D2;
+      background-image:
+          repeating-linear-gradient(
+              to right, transparent 0 100px,
+              #25283b22 100px 101px
+          ),
+          repeating-linear-gradient(
+              to bottom, transparent 0 100px,
+              #25283b22 100px 101px
+          );
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      position: relative;
+      color: #333;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      position: absolute;
+      width: min(1400px, 90vw);
+      top: 10%;
+      left: 50%;
+      height: 90%;
+      transform: translateX(-50%);
+      content: '';
+      background-image: url(assets/bg.png);
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: top center;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Header styling sesuai permintaan */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(210, 210, 210, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid rgba(120, 120, 120, 0.2);
+      height: 70px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #444;
+      position: relative;
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #fdbb2d, #b21f1f);
+      transition: width 0.3s ease;
+    }
+
+    .logo:hover::after {
+      width: 100%;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      height: auto;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(180, 180, 180, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    nav a:hover::before {
+      left: 100%;
+    }
+
+    nav a:hover {
+      color: #333;
+      background-color: rgba(180, 180, 180, 0.3);
+      transform: translateY(-2px);
+    }
+
+    nav a.active {
+      color: #333;
+      background-color: rgba(180, 180, 180, 0.4);
+    }
+
+    .banner{
+        width: 100%;
+        height: calc(100vh - 70px);
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .banner .content{
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(1400px, 100vw);
+        height: max-content;
+        padding-bottom: 100px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1;
+    }
+    
+    /* Glitch Effect untuk PROJECTS */
+    .banner .content h1{
+        font-family: 'ICA Rubrik';
+        font-size: 16em;
+        line-height: 1em;
+        color: #25283B;
+        position: relative;
+        animation: glitch 10s infinite;
+    }
+    
+    .banner .content h1::before,
+    .banner .content h1::after {
+        content: attr(data-content);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .banner .content h1::before {
+        animation: glitch-top 1s infinite;
+        clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    }
+    
+    .banner .content h1::after {
+        animation: glitch-bottom 1.5s infinite;
+        clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+        -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+    }
+    
+    @keyframes glitch {
+        0%, 12%, 15%, 52%, 55%, 82%, 85%, 100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        13% {
+            opacity: 0.8;
+            transform: translateX(-5px);
+        }
+        14% {
+            opacity: 0.8;
+            transform: translateX(5px);
+        }
+        53% {
+            opacity: 0.7;
+            transform: translateX(-3px) translateY(2px);
+        }
+        54% {
+            opacity: 0.7;
+            transform: translateX(3px) translateY(-2px);
+        }
+        83% {
+            opacity: 0.9;
+            transform: translateX(4px);
+        }
+        84% {
+            opacity: 0.9;
+            transform: translateX(-4px);
+        }
+    }
+    
+    @keyframes glitch-top {
+        0%, 100% {
+            transform: translate(0);
+            color: #25283B;
+        }
+        10% {
+            transform: translate(-2px, 2px);
+            color: #ff5252;
+        }
+        20% {
+            transform: translate(3px, -1px);
+            color: #25283B;
+        }
+        30% {
+            transform: translate(-1px, 3px);
+            color: #25283B;
+        }
+        40% {
+            transform: translate(2px, -2px);
+            color: #25283B;
+        }
+        50% {
+            transform: translate(-3px, 1px);
+            color: #ff5252;
+        }
+        60% {
+            transform: translate(1px, -3px);
+            color: #25283B;
+        }
+        70% {
+            transform: translate(-2px, 2px);
+            color: #25283B;
+        }
+        80% {
+            transform: translate(3px, -1px);
+            color: #25283B;
+        }
+        90% {
+            transform: translate(-1px, 3px);
+            color: #ff5252;
+        }
+    }
+    
+    @keyframes glitch-bottom {
+        0%, 100% {
+            transform: translate(0);
+            color: #25283B;
+        }
+        10% {
+            transform: translate(2px, -2px);
+            color: #25283B;
+        }
+        20% {
+            transform: translate(-3px, 1px);
+            color: #25283B;
+        }
+        30% {
+            transform: translate(1px, -3px);
+            color: #00ffea;
+        }
+        40% {
+            transform: translate(-2px, 2px);
+            color: #25283B;
+        }
+        50% {
+            transform: translate(3px, -1px);
+            color: #25283B;
+        }
+        60% {
+            transform: translate(-1px, 3px);
+            color: #25283B;
+        }
+        70% {
+            transform: translate(2px, -2px);
+            color: #00ffea;
+        }
+        80% {
+            transform: translate(-3px, 1px);
+            color: #25283B;
+        }
+        90% {
+            transform: translate(1px, -3px);
+            color: #25283B;
+        }
+    }
+    
+    .banner .content .author{
+        font-family: Poppins;
+        text-align: right;
+        max-width: 200px;
+    }
+    .banner .content h2{
+        font-size: 3em;
+    }
+    .banner .content .model{
+        background-image: url(assets/GAD.png);
+        width: 100%;
+        height: 75vh;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background-size: auto 130%;
+        background-repeat: no-repeat;
+        background-position: top center;
+        z-index: 1;
+    }
+
+    /* Expanding Image Gallery */
+    .gallery-section {
+        width: 100%;
+        padding: 80px 0;
+        background: rgba(210, 210, 210, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .gallery-container {
+        width: 90%;
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gallery-title {
+        font-family: 'ICA Rubrik';
+        font-size: 3em;
+        color: #25283B;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .gallery {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 500px;
+    }
+
+    .img-box {
+        width: 100px;
+        height: 500px;
+        margin: 12px;
+        border-radius: 50px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        transition: width 0.5s;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .img-box:nth-child(1){
+        background: url(assets/galcalbu.png);
+        background-size: cover;
+        background-position: center;
+    }
+    .img-box:nth-child(2){
+        background: url(https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80);
+        background-size: cover;
+        background-position: center;
+    }
+    .img-box:nth-child(3){
+        background: url(https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80);
+        background-size: cover;
+        background-position: center;
+    }
+
+    .img-box:nth-child(4){
+        background: url(https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80);
+        background-size: cover;
+        background-position: center;
+    }
+
+    .img-box h3 {
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+        left: 33px;
+        opacity: 0;
+        transition: bottom 0.5s, opacity 0.5s;
+        font-size: 1.5rem;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    .img-box:hover {
+        width: 300px;
+        cursor: pointer;
+    }
+
+    .img-box:hover h3{
+        opacity: 1;
+        bottom: 24px;
+    }
+
+    @media screen and (max-width: 1023px) {
+        .navbar {
+            padding: 15px 30px;
+        }
+
+        .navbar .nav-links {
+            gap: 20px;
+        }
+
+        .gallery {
+            height: 400px;
+        }
+        
+        .img-box {
+            height: 400px;
+        }
+        
+        .banner .content h1{
+            text-align: center;
+            width: 100%;
+            text-shadow: 0 10px 20px #000;
+            font-size: 7em;
+        }
+        .banner .content .author{
+            color: #fff;
+            padding: 20px;
+            text-shadow: 0 10px 20px #000;
+            z-index: 2;
+            max-width: unset;
+            width: 100%;
+            text-align: center;
+            padding: 0 30px;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        body {
+            padding-top: 60px;
+        }
+
+        header {
+            padding: 12px 20px;
+            height: 60px;
+        }
+
+        .logo {
+            font-size: 1.5em;
+        }
+
+        .navbar .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(37, 40, 59, 0.98);
+            flex-direction: column;
+            padding: 20px;
+            gap: 15px;
+            z-index: 1001;
+        }
+
+        .navbar .nav-links.active {
+            display: flex;
+        }
+
+        .navbar .menu-toggle {
+            display: block;
+        }
+
+        .banner {
+            height: calc(100vh - 60px);
+        }
+
+        .gallery {
+            height: 300px;
+            flex-wrap: wrap;
+            width: 95%;
+        }
+        
+        .img-box {
+            height: 300px;
+            width: 80px;
+            margin: 8px;
+        }
+        
+        .img-box:hover {
+            width: 200px;
+        }
+        
+        .banner .content h1{
+            font-size: 5em;
+        }
+
+        .gallery-title {
+            font-size: 2em;
+        }
+    }
+
+    /* CSS untuk modal */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: 10px;
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        animation: borderFlicker 4s infinite;
+        border: 3px solid transparent;
+    }
+
+    @keyframes borderFlicker {
+        0%, 100% {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        20% {
+            border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+        }
+        40% {
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        60% {
+            border-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.9);
+        }
+        80% {
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+        }
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s;
+        z-index: 2001;
+    }
+
+    .close:hover {
+        color: #ff5252;
+    }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar dengan styling baru -->
+    <header>
+        <div class="container">
+            <h1 class="logo">GAD</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="projects.html" class="active">Projects</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Banner Section -->
+    <div class="banner" id="home">
+        <div class="content">
+            <h1 data-content="PROJECTS">
+                PROJECTS
+            </h1>
+            <div class="author">
+                <h2>GALVIN ALFITO</h2>
+                <p><b>Web Developer</b></p>
+                <p>
+                    Creative developer passionate about building amazing web experiences
+                </p>
+            </div>
+            <div class="model"></div>
+        </div>
+    </div>
+    
+    <!-- Expanding Image Gallery Section -->
+    <section class="gallery-section">
+        <div class="gallery-container">
+            <h2 class="gallery-title">MY PROJECTS</h2>
+            <div class="gallery">
+                <div class="img-box" onclick="openModal('https://github.com/Galvinal-227/galcalbu')">
+                    <h3>Web Design</h3>
+                </div>
+                <div class="img-box" onclick="openModal('https://images.unsplash.com/photo-1537498425277-c283d32ef9db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                    <h3>UI/UX</h3>
+                </div>
+                <div class="img-box" onclick="openModal('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                    <h3>Development</h3>
+                </div>
+                <div class="img-box" onclick="openModal('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                    <h3>Branding</h3>
+                </div>
+                <div class="img-box" onclick="openModal('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80')">
+                    <h3>Marketing</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Modal untuk preview gambar -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Fungsi untuk membuka modal dengan gambar yang diklik
+        function openModal(imageSrc) {
+            document.getElementById('imageModal').style.display = 'flex';
+            document.getElementById('modalImage').src = imageSrc;
+        }
+        
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+        
+        // Menutup modal ketika mengklik di luar gambar
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+        
+        // Menutup modal dengan tombol ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+    
+</body>
+</html>
