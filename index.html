@@ -319,11 +319,11 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
-    /* ROBOT 3D - POSISI YANG LEBIH BAIK */
+    /* ROBOT 3D - POSISI BARU YANG LEBIH BAIK */
     .robot-3d {
       position: absolute;
       top: 50%;
-      right: 5%; /* Diperbaiki dari -10% menjadi 5% */
+      right: 5%;
       transform: translateY(-50%);
       animation: float 6s ease-in-out infinite;
       width: 500px;
@@ -331,6 +331,12 @@
       /* Sembunyikan di mobile */
       display: block;
       z-index: 2;
+    }
+
+    /* Perbaikan untuk robot baru agar tidak terlalu besar */
+    .robot-3d spline-viewer {
+      width: 100% !important;
+      height: 100% !important;
     }
 
     @keyframes float {
@@ -672,40 +678,18 @@
     }
     
     /* RESPONSIVE DESIGN - PERBAIKAN UTAMA */
-    @media (max-width: 1200px) {
-      .robot-3d {
-        width: 450px;
-        height: 450px;
-        right: 3%;
-      }
-    }
-
     @media (max-width: 1024px) {
-      spline-viewer {
+      .robot-3d {
         width: 400px;
         height: 400px;
-        right: 2%;
+        right: 3%;
       }
       
       h1 {
         font-size: 3.5rem;
       }
-      
-      .robot-3d {
-        width: 400px;
-        height: 400px;
-        right: 2%;
-      }
     }
     
-    @media (max-width: 900px) {
-      .robot-3d {
-        width: 350px;
-        height: 350px;
-        right: 1%;
-      }
-    }
-
     @media (max-width: 768px) {
       /* SEMBUNYIKAN ROBOT DI TABLET DAN MOBILE */
       .robot-3d {
@@ -876,19 +860,6 @@
       max-width: 100%;
       overflow: hidden;
     }
-
-    /* Additional positioning for better visual balance */
-    @media (min-width: 1400px) {
-      .robot-3d {
-        right: 8%;
-      }
-    }
-
-    @media (min-width: 1600px) {
-      .robot-3d {
-        right: 10%;
-      }
-    }
   </style>
 </head>
 <body class="intro-active">
@@ -952,7 +923,7 @@
     </div>
   </main>
 
-  <!-- Robot 3D - Hanya tampil di desktop -->
+  <!-- Robot 3D BARU - Hanya tampil di desktop -->
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.11.5/build/spline-viewer.js"></script>
   <spline-viewer data-aos="fade-zoom-in"
       class="robot-3d" 
@@ -1096,12 +1067,29 @@
       }
     }
 
+    // Animasi progress percentage
+    function updateProgressPercentage() {
+      const progressElement = document.getElementById('progressPercentage');
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 10;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+        }
+        progressElement.textContent = Math.floor(progress) + '%';
+      }, 100);
+    }
+
     // Muat bahasa yang dipilih sebelumnya atau default
     document.addEventListener('DOMContentLoaded', function() {
       const savedLanguage = localStorage.getItem('preferredLanguage') || 'en';
       
       // Buat partikel
       createParticles();
+      
+      // Mulai animasi progress
+      updateProgressPercentage();
       
       // Tunggu intro selesai baru jalankan typewriter
       setTimeout(function() {
@@ -1119,6 +1107,18 @@
     setTimeout(() => {
       document.querySelector(".intro").style.display = "none";
     }, 4500);
+
+    // Fix untuk scroll issues - pastikan tidak ada overflow
+    window.addEventListener('load', function() {
+      // Force reflow untuk memastikan layout stabil
+      document.body.style.overflowX = 'hidden';
+      
+      // Check jika ada horizontal scroll
+      if (document.documentElement.scrollWidth > window.innerWidth) {
+        console.log('Horizontal scroll detected, fixing...');
+        document.body.style.overflowX = 'hidden';
+      }
+    });
   </script>
 </body>
 </html>
