@@ -24,14 +24,6 @@
       position: relative;
       color: #333;
       overflow-x: hidden;
-      /* Hilangkan scroll horizontal dan vertical yang tidak perlu */
-      overflow-y: auto;
-    }
-    
-    /* Pastikan tidak ada konten yang melebihi viewport */
-    html, body {
-      max-width: 100%;
-      overflow-x: hidden;
     }
     
     body::before {
@@ -154,8 +146,6 @@
       align-items: center;
       position: relative;
       z-index: 1;
-      /* Pastikan tidak ada overflow */
-      overflow: hidden;
     }
 
     .content {
@@ -163,8 +153,6 @@
       margin: 0 auto;
       padding: 0 20px;
       width: 100%;
-      /* Pastikan konten tidak melebihi viewport */
-      box-sizing: border-box;
     }
 
     .tag-box {
@@ -196,8 +184,6 @@
       margin: 0 0 20px 0;
       color: #444;
       min-height: 140px;
-      /* Pastikan tidak overflow */
-      word-wrap: break-word;
     }
 
     /* Typewriter effect styling */
@@ -222,8 +208,6 @@
       color: #555;
       opacity: 0;
       animation: fadeInUp 1s ease 0.5s forwards;
-      /* Pastikan tidak overflow */
-      word-wrap: break-word;
     }
 
     .description strong {
@@ -240,7 +224,6 @@
       margin-top: 40px;
       opacity: 0;
       animation: fadeInUp 1s ease 1s forwards;
-      flex-wrap: wrap;
     }
 
     @keyframes fadeInUp {
@@ -319,29 +302,16 @@
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
 
-    /* ROBOT 3D - POSISI BARU YANG LEBIH BAIK */
     .robot-3d {
       position: absolute;
-      top: 50%;
-      right: 5%;
-      transform: translateY(-50%);
+      top: 0;
+      right: -20%;
       animation: float 6s ease-in-out infinite;
-      width: 500px;
-      height: 500px;
-      /* Sembunyikan di mobile */
-      display: block;
-      z-index: 2;
-    }
-
-    /* Perbaikan untuk robot baru agar tidak terlalu besar */
-    .robot-3d spline-viewer {
-      width: 100% !important;
-      height: 100% !important;
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(-50%) rotate(0deg); }
-      50% { transform: translateY(-55%) rotate(2deg); }
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
     }
 
     /* Language Switcher */
@@ -677,12 +647,12 @@
       pointer-events: none;
     }
     
-    /* RESPONSIVE DESIGN - PERBAIKAN UTAMA */
+    /* Responsif */
     @media (max-width: 1024px) {
-      .robot-3d {
+      spline-viewer {
         width: 400px;
         height: 400px;
-        right: 3%;
+        right: 2%;
       }
       
       h1 {
@@ -691,11 +661,6 @@
     }
     
     @media (max-width: 768px) {
-      /* SEMBUNYIKAN ROBOT DI TABLET DAN MOBILE */
-      .robot-3d {
-        display: none !important;
-      }
-      
       header {
         padding: 10px 0;
         height: 60px;
@@ -705,25 +670,30 @@
         padding-top: 60px;
         min-height: calc(100vh - 60px);
         text-align: center;
-        /* Pastikan tidak ada scroll yang tidak perlu */
-        overflow: hidden;
       }
       
       h1 {
         font-size: 2.5rem;
         min-height: 100px;
-        margin-bottom: 15px;
       }
       
       .description {
         font-size: 1.1rem;
-        margin-bottom: 30px;
+      }
+      
+      spline-viewer {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
+        height: 300px;
+        margin-top: 40px;
       }
       
       .buttons {
         flex-direction: column;
         align-items: center;
-        gap: 15px;
       }
       
       .btn-get-started, .btn-signing-main {
@@ -743,13 +713,18 @@
       }
       
       .content{
-        margin-top: 0;
-        padding: 20px;
+        margin-top: 25rem;
+      }
+
+      .robot-3d{
+        scale: 0.5;
+        top: -25%;
+        right: 0;
       }
 
       .content{
-        max-width: 100%;
-        margin-left: 0;
+        max-width: 30rem;
+        margin-left: 10%;
       }
 
       /* Mobile adjustments for intro */
@@ -768,25 +743,13 @@
     }
     
     @media (max-width: 480px) {
-      /* PASTIKAN TIDAK ADA SCROLL UNNECESSARY */
-      body {
-        overflow-y: auto;
-      }
-      
-      main {
-        min-height: calc(100vh - 55px);
-        padding-bottom: 20px;
-      }
-      
       h1 {
         font-size: 2rem;
         min-height: 80px;
-        line-height: 1.2;
       }
       
       .description {
         font-size: 1rem;
-        line-height: 1.5;
       }
       
       .tag {
@@ -800,6 +763,7 @@
       
       main {
         padding-top: 55px;
+        min-height: calc(100vh - 55px);
       }
       
       .logo {
@@ -822,43 +786,6 @@
       .progress-percentage {
         font-size: 1.2rem;
       }
-      
-      .buttons {
-        margin-top: 30px;
-      }
-    }
-
-    /* EXTRA SMALL DEVICES */
-    @media (max-width: 320px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      .description {
-        font-size: 0.9rem;
-      }
-      
-      .btn-get-started, .btn-signing-main {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-      }
-    }
-
-    /* FIX FOR SCROLL ISSUES */
-    /* Pastikan semua elemen tidak menyebabkan horizontal scroll */
-    * {
-      max-width: 100%;
-    }
-
-    /* Hilangkan scrollbar horizontal */
-    body {
-      overflow-x: hidden;
-    }
-
-    /* Pastikan container utama tidak melebihi viewport */
-    .container, .content {
-      max-width: 100%;
-      overflow: hidden;
     }
   </style>
 </head>
@@ -923,11 +850,11 @@
     </div>
   </main>
 
-  <!-- Robot 3D BARU - Hanya tampil di desktop -->
-  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.11.5/build/spline-viewer.js"></script>
+  <!-- Robot 3D -->
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.82/build/spline-viewer.js"></script>
   <spline-viewer data-aos="fade-zoom-in"
       class="robot-3d" 
-      url="https://prod.spline.design/UOBO4Y53mh0YTIG5/scene.splinecode">
+      url="https://prod.spline.design/tet11sbLmqFHtGzr/scene.splinecode">
   </spline-viewer>
 
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -1107,18 +1034,6 @@
     setTimeout(() => {
       document.querySelector(".intro").style.display = "none";
     }, 4500);
-
-    // Fix untuk scroll issues - pastikan tidak ada overflow
-    window.addEventListener('load', function() {
-      // Force reflow untuk memastikan layout stabil
-      document.body.style.overflowX = 'hidden';
-      
-      // Check jika ada horizontal scroll
-      if (document.documentElement.scrollWidth > window.innerWidth) {
-        console.log('Horizontal scroll detected, fixing...');
-        document.body.style.overflowX = 'hidden';
-      }
-    });
   </script>
 </body>
 </html>
